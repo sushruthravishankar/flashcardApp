@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 from django.contrib import admin
-from .models import Choice, Question
+from .models import Choice, Question, Card
 
 
 class ChoiceInline(admin.TabularInline):
@@ -18,4 +18,12 @@ class QuestionAdmin(admin.ModelAdmin):
     inlines = [ChoiceInline]
 
 
+class CardAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {'fields': ['question']}),
+        (None, {'fields': ['answer']}),
+    ]
+
+
 admin.site.register(Question, QuestionAdmin)
+admin.site.register(Card, CardAdmin)

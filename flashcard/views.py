@@ -5,8 +5,9 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
+from django.views.generic import ListView
 
-from .models import Choice, Question
+from .models import Choice, Question, Card
 
 
 def index(request):
@@ -43,3 +44,7 @@ def vote(request, question_id):
         # with POST data. This prevents data from being posted twice if a
         # user hits the Back button.
         return HttpResponseRedirect(reverse('flashcard:results', args=(question.id,)))
+
+class CardListView(ListView):
+    model = Card
+    queryset = Card.objects.all().order_by("date_created")
