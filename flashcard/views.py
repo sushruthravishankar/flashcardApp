@@ -4,8 +4,8 @@ from django.shortcuts import render
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
-from django.views.generic import ListView
+from django.urls import reverse, reverse_lazy
+from django.views.generic import ListView, CreateView
 
 from .models import Choice, Question, Card
 
@@ -45,6 +45,14 @@ def vote(request, question_id):
         # user hits the Back button.
         return HttpResponseRedirect(reverse('flashcard:results', args=(question.id,)))
 
+
 class CardListView(ListView):
     model = Card
     queryset = Card.objects.all().order_by("date_created")
+
+
+class CardCreateView(CreateView):
+    model = Card
+    fields = ["question", "answer"]
+    success_url = reverse_lazy('flashcard:card-create')
+
