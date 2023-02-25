@@ -56,3 +56,16 @@ class CardCreateView(CreateView):
     fields = ["question", "answer"]
     success_url = reverse_lazy('flashcard:card-create')
 
+
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework import status
+from .serializers import *
+
+
+@api_view(['GET'])
+def flashcard_list(request):
+    if request.method == 'GET':
+        data = Card.objects.all();
+        serializer = CardSerializer(data, context={'request': request}, many=True)
+        return Response(serializer.data)

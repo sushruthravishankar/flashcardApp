@@ -13,5 +13,6 @@ urlpatterns = [
         "new",
         views.CardCreateView.as_view(),
         name='card-create'
-    )
+    ),
+    path('rest-all', views.flashcard_list, name='rest-all')
 ]
