@@ -6,8 +6,6 @@ import NewCardModal from "./NewCardModal";
 import axios from "axios";
 
 import { API_URL } from "../constants";
-// import FlashcardTileGroup from "./FlashcardTileGroup";
-import CardList from "./CardList";
 import FlashcardTileGroup from "./FlashcardTileGroup";
 
 class Home extends Component {
