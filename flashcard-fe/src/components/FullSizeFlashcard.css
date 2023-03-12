@@ -1,0 +1,38 @@
+.flashcard-full {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 2em;
+  padding: 2em;
+  width: 75%;
+  height: 80vh;
+}
+
+.question-full {
+  flex: 1;
+  text-align: center;
+}
+
+.comments-full {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-left: 2em;
+}
+
+.comment {
+  display: flex;
+  align-items: center;
+  font-size: 0.8em;
+  margin-bottom: 1em;
+}
+
+.text {
+  flex: 1;
+}
+
+.votes {
+  margin-left: 1em;
+  font-size: 0.8em;
+}
