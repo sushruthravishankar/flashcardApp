@@ -1,16 +1,36 @@
 import React, { useState } from 'react';
 import './Comment.css';
+import axios from "axios";
 
-const Comment = ({text, initialVoteCount}) => {
+const Comment = ({id, text, initialVoteCount}) => {
   const [voteCount, setVoteCount] = useState(initialVoteCount);
 
   function handleIncreaseVote() {
-    setVoteCount(voteCount + 1);
+    // setVoteCount(voteCount + 1);
+    const newVoteCount = voteCount + 1;
+    const URL = `http://localhost:8000/flashcard/comment/upvote/${id}`;
+    axios.put(URL, { voteCount: newVoteCount})
+         .then(_ => {
+        setVoteCount(newVoteCount);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   function handleDecreaseVote() {
-    setVoteCount(voteCount - 1);
+    // setVoteCount(voteCount + 1);
+    const newVoteCount = voteCount - 1;
+    const URL = `http://localhost:8000/flashcard/comment/downvote/${id}`;
+    axios.put(URL, { voteCount: newVoteCount})
+         .then(_ => {
+        setVoteCount(newVoteCount);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
+
 
   return (
     <div className="comment">

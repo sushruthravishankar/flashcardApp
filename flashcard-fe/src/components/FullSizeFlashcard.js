@@ -40,6 +40,9 @@ const FullSizeFlashcard = () => {
   const [question, setQuestion] = useState('');
   const [date, setDateCreated] = useState('');
   const [comments, setComments] = useState([]);
+  const [newAnswerText, setNewAnswerText] = useState('');
+
+
   useEffect(() => {
       const URL = `http://localhost:8000/flashcard/rest-flashcard/${id}`;
     axios.get(URL)
@@ -53,19 +56,43 @@ const FullSizeFlashcard = () => {
       .catch(error => console.log(error));
   }, [id]);
 
+  const handleNewCommentSubmit = (event) => {
+    event.preventDefault();
+
+    const newComment = { answer: newAnswerText, votes: 1 };
+    axios.post(`http://localhost:8000/flashcard/rest-flashcard/${id}/comments`, newComment)
+      .then(response => {
+        setComments([...comments, response.data]);
+        setNewAnswerText('');
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   return (
     <div className="flashcard-full">
       <div className="question-full">{question}</div>
         {/*<div className="question-full">{date}</div>*/}
-      <div className="comments-full">
+      <div className="comments-full right-pane">
           {comments.map(comment => (
           <Comment
             key={comment.id}
+            id={comment.id}
             text={comment.answer}
             initialVoteCount={comment.votes}
           />
           ))}
+          <form onSubmit={handleNewCommentSubmit} className="new-comment-form">
+              <textarea
+                value={newAnswerText}
+                onChange={(event) => setNewAnswerText(event.target.value)}
+                className="new-comment-input"
+                rows={3}
+                placeholder="Got a better answer? Write it here!"
+              />
+              <button type="submit" className="new-comment-submit">Submit</button>
+          </form>
       </div>
     </div>
   );

@@ -5,9 +5,16 @@
   align-items: center;
   font-size: 2em;
   padding: 2em;
-  width: 75%;
-  height: 80vh;
+  width: 100vw;
+  height: 100vh;
 }
+
+/*.flashcard {*/
+/*  display: flex;*/
+/*  justify-content: space-between;*/
+/*  align-items: center;*/
+
+/*}*/
 
 .question-full {
   flex: 1;
@@ -35,4 +42,51 @@
 .votes {
   margin-left: 1em;
   font-size: 0.8em;
+}
+
+
+.new-comment-form {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  background-color: #ddd;
+  opacity: 0.8;
+}
+
+.new-comment-input {
+  display: block;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  resize: vertical;
+}
+
+.new-comment-submit {
+  display: block;
+  margin: 0 auto;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.new-comment-submit:hover {
+  background-color: #555;
+}
+
+.right-pane {
+  width: 100%;
+  height: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: scroll;
 }

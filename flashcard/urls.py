@@ -15,5 +15,8 @@ urlpatterns = [
         name='card-create'
     ),
     path('rest-all', views.flashcard_list, name='rest-all'),
-    path('rest-flashcard/<int:flashcard_id>', views.flashcard_comments_list, name='rest-flashcard')
+    path('rest-flashcard/<int:flashcard_id>', views.flashcard_comments_list, name='rest-flashcard'),
+    path('comment/upvote/<int:comment_id>', views.comment_upvote, name='comment-upvote'),
+    path('comment/downvote/<int:comment_id>', views.comment_downvote, name='comment-downvote'),
+    path('rest-flashcard/<int:question_id>/comments', views.add_comment, name='add-comment')
 ]

@@ -82,7 +82,7 @@ def flashcard_list(request):
 def flashcard_comments_list(request, flashcard_id):
     if request.method == 'GET':
         flashcard = get_object_or_404(Flashcard, pk=flashcard_id)
-        comments = Comments.objects.filter(question=flashcard)
+        comments = Comments.objects.filter(question=flashcard).order_by('-votes')
         serializer = CommentSerializer(comments, many=True)
         data = {
             'question': flashcard.question,
@@ -91,6 +91,52 @@ def flashcard_comments_list(request, flashcard_id):
         }
         return Response(data)
 
+
+
+@api_view(['PUT'])
+def comment_upvote(request, comment_id):
+    comment = get_object_or_404(Comments, pk=comment_id)
+    comment.votes += 1
+    comment.save()
+    # Always return an HttpResponseRedirect after successfully dealing
+    # with POST data. This prevents data from being posted twice if a
+    # user hits the Back button.
+    # return HttpResponseRedirect(reverse('flashcard:results', args=(question.id,)))
+    return JsonResponse({
+        'status': 'success',
+        'message': 'Comment upvoted successfully.'
+    })
+
+@api_view(['PUT'])
+def comment_downvote(request, comment_id):
+    comment = get_object_or_404(Comments, pk=comment_id)
+    comment.votes -= 1
+    comment.save()
+    # Always return an HttpResponseRedirect after successfully dealing
+    # with POST data. This prevents data from being posted twice if a
+    # user hits the Back button.
+    # return HttpResponseRedirect(reverse('flashcard:results', args=(question.id,)))
+    return JsonResponse({
+        'status': 'success',
+        'message': 'Comment upvoted successfully.'
+    })
+
+@api_view(['POST', 'GET'])
+def add_comment(request, question_id):
+    if request.method == 'GET':
+        question = get_object_or_404(Flashcard, pk=question_id)
+        comments = Comments.objects.filter(question=question)
+        serializer = CommentSerializer(comments, context={'request': request}, many=True)
+        return Response(serializer.data)
+    if request.method == 'POST':
+        print(request.data)
+        question = get_object_or_404(Flashcard, pk=question_id)
+        serializer = CommentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(question=question)
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # def detail(request, question_id):
