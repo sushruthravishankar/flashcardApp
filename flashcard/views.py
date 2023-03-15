@@ -2,12 +2,12 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView
-
-from .models import Choice, Question, Card
+from django.core import serializers as ser
+from .models import Choice, Question, Card, Comments, Flashcard
 
 
 def index(request):
@@ -76,3 +76,43 @@ def flashcard_list(request):
             return Response(status=status.HTTP_201_CREATED)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def flashcard_comments_list(request, flashcard_id):
+    if request.method == 'GET':
+        flashcard = get_object_or_404(Flashcard, pk=flashcard_id)
+        comments = Comments.objects.filter(question=flashcard)
+        serializer = CommentSerializer(comments, many=True)
+        data = {
+            'question': flashcard.question,
+            'date_created': flashcard.date_created,
+            'comments': serializer.data
+        }
+        return Response(data)
+
+
+
+# def detail(request, question_id):
+#     question = get_object_or_404(Question, pk=question_id)
+#     return render(request, 'flashcard/detail.html', {'question': question})
+
+
+
+# def vote(request, question_id):
+#     question = get_object_or_404(Question, pk=question_id)
+#     try:
+#         selected_choice = question.choice_set.get(pk=request.POST['choice'])
+#     except (KeyError, Choice.DoesNotExist):
+#         # Redisplay the question voting form.
+#         return render(request, 'polls/detail.html', {
+#             'question': question,
+#             'error_message': "You didn't select a choice.",
+#         })
+#     else:
+#         selected_choice.votes += 1
+#         selected_choice.save()
+#         # Always return an HttpResponseRedirect after successfully dealing
+#         # with POST data. This prevents data from being posted twice if a
+#         # user hits the Back button.
+#         return HttpResponseRedirect(reverse('flashcard:results', args=(question.id,)))

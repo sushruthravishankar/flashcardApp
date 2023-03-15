@@ -14,7 +14,7 @@ class App extends Component {
     <BrowserRouter>
         <Routes>
           {/*<Route path="/">*/}
-         <Route path="/flashcards/:id" element={<FullSizeFlashcard />} />
+         <Route path="/flashcards/:id" element={<FullSizeFlashcard/>} />
           <Route path="/" element={<Home />} />
 
           {/*<Fragment>*/}

@@ -22,3 +22,32 @@ class Card(models.Model):
 
     def __str__(self):
         return self.question
+
+
+class Card(models.Model):
+    question = models.CharField(max_length=100)
+    answer = models.CharField(max_length=100)
+    date_created = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.question
+
+
+class Flashcard(models.Model):
+    question = models.TextField()
+    date_created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.question
+
+
+class Comments(models.Model):
+    question = models.ForeignKey(Flashcard, on_delete=models.CASCADE)
+    answer = models.CharField(max_length=200)
+    data_created = models.DateTimeField(auto_now_add=True)
+    votes = models.IntegerField(auto_created=1)
+
+
+
+    def __str__(self):
+        return self.answer

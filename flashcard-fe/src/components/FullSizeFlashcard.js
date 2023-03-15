@@ -3,6 +3,8 @@ import axios from 'axios';
 import './FullSizeFlashcard.css'
 import Comment from "./Comment";
 import styled from 'styled-components';
+import {API_FLASHCARD_DETAILED} from "../constants";
+import {useParams} from "react-router-dom";
 
 // const FullSizeFlashcard = () => {
 //
@@ -33,35 +35,35 @@ import styled from 'styled-components';
 
 
 const FullSizeFlashcard = () => {
-  // const [question, setQuestion] = useState('');
-  // const [comments, setComments] = useState([]);
-    const question = 'Tester question - How many mailing items do i have?'
-    const comments = [{voteCount: 1, id: 0, text: 'Comment 1'}, {voteCount:2, id: 1, text: 'You have quite a lot!'}];
+    let {id} = useParams()
+    console.log("id: " + id);
+  const [question, setQuestion] = useState('');
+  const [date, setDateCreated] = useState('');
+  const [comments, setComments] = useState([]);
+  useEffect(() => {
+      const URL = `http://localhost:8000/flashcard/rest-flashcard/${id}`;
+    axios.get(URL)
+      .then(response => {
+          const data = response.data
+        setQuestion(data.question);
+        setComments(data.comments);
+        setDateCreated(data.date_created);
 
-  // useEffect(() => {
-  //   axios.get('/flashcards/1')
-  //     .then(response => {
-  //       setQuestion(response.data.question);
-  //       setComments(response.data.comments);
-  //     })
-  //     .catch(error => console.log(error));
-  // }, []);
+      })
+      .catch(error => console.log(error));
+  }, [id]);
+
 
   return (
     <div className="flashcard-full">
       <div className="question-full">{question}</div>
+        {/*<div className="question-full">{date}</div>*/}
       <div className="comments-full">
-        {/*{comments.map(comment => (*/}
-        {/*  <div className="comment" key={comment.id}>*/}
-        {/*    <div className="text">{comment.text}</div>*/}
-        {/*    <div className="votes">{comment.votes}</div>*/}
-        {/*  </div>*/}
-        {/*))}*/}
           {comments.map(comment => (
           <Comment
             key={comment.id}
-            text={comment.text}
-            initialVoteCount={comment.voteCount}
+            text={comment.answer}
+            initialVoteCount={comment.votes}
           />
           ))}
       </div>
