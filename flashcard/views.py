@@ -78,6 +78,23 @@ def flashcard_list(request):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['POST'])
+def add_flashcard_with_comment(request):
+    print(request.data)
+    question_text = request.data.get('question')
+    answer_text = request.data.get('answer')
+    if not question_text or not answer_text:
+        return JsonResponse({'error': 'Both question and comment text are required'}, status=400)
+    flashcard = Flashcard(question=question_text)
+    flashcard.save()
+    comment = Comments(question=flashcard, answer=answer_text, votes=1)
+    comment.save()
+    flashcard_serializer = FlashCardSerializer(flashcard)
+    comment_serializer = CommentSerializer(comment)
+    return Response(status=status.HTTP_201_CREATED)
+
+
+
 @api_view(['GET'])
 def flashcard_comments_list(request, flashcard_id):
     if request.method == 'GET':
@@ -91,6 +108,42 @@ def flashcard_comments_list(request, flashcard_id):
         }
         return Response(data)
 
+# @api_view(['GET'])
+# def flashcard_top_comment(request, flashcard_id):
+#     if request.method == 'GET':
+#         flashcard = get_object_or_404(Flashcard, pk=flashcard_id)
+#         answer = Comments.objects.filter(question=flashcard).order_by('-votes')[:1]
+#         serializer = CommentSerializer(answer)
+#         data = {
+#             'question': flashcard.question,
+#             'date_created': flashcard.date_created,
+#             'answer': serializer.data
+#         }
+#         return Response(data)
+
+
+class FlashcardWithTopCommentSerializer(serializers.ModelSerializer):
+    top_comment = CommentSerializer(read_only=True)
+
+    class Meta:
+        model = Flashcard
+        fields = ['id', 'question', 'top_comment']
+
+
+@api_view(['GET'])
+def all_flashcards_with_top_comment(request):
+    flashcards = Flashcard.objects.all()
+    flashcards_with_top_comment = []
+    for flashcard in flashcards:
+        top_comment = flashcard.comments_set.order_by('-votes').first()
+        serializer = CommentSerializer(top_comment)
+        data = {
+            'question': flashcard.question,
+            'date_created': flashcard.date_created,
+            'top_comment': serializer.data
+        }
+        flashcards_with_top_comment.append(data)
+    return Response(flashcards_with_top_comment)
 
 
 @api_view(['PUT'])

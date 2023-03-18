@@ -33,7 +33,7 @@ const Comment = ({id, text, initialVoteCount}) => {
 
 
   return (
-    <div className="comment">
+    <div className="comment_button">
       <div className="vote-buttons">
         <button onClick={handleIncreaseVote} className="vote-up"></button>
         <div className="vote-count">{voteCount}</div>

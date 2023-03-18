@@ -1,9 +1,17 @@
-.comment {
+.comment_button {
   display: flex;
   align-items: center;
   font-size: 0.8em;
   margin-bottom: 1em;
-  padding-left: 1em;
+  /*padding-left: 1em;*/
+  background-color: #ddd;
+
+  border-radius: 10px;
+  /*border-width: 10px;*/
+  /*border-color: #282c34;*/
+  padding: 10px;
+  border: 3px #0F0326;
+  /*margin-bottom: 10px;*/
 }
 
 .vote-buttons {

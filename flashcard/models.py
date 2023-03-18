@@ -36,7 +36,6 @@ class Card(models.Model):
 class Flashcard(models.Model):
     question = models.TextField()
     date_created = models.DateTimeField(auto_now_add=True)
-
     def __str__(self):
         return self.question
 

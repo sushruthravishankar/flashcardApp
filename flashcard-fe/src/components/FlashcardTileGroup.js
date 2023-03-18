@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Flashcard.css';
 import { Link } from "react-router-dom";
 
-const Flashcard = ({question, answer, id}) => {
+const Flashcard = ({question, top_comment, id}) => {
   console.log(id);
   const [showAnswer, setShowAnswer] = useState(false);
   const [fullScreen, setFullScreen] = useState(false);
@@ -24,27 +24,6 @@ const Flashcard = ({question, answer, id}) => {
     setFullScreen(false);
   };
 
-  // if (fullScreen){
-  //   return (
-  //       <div className="flashcard full-screen">
-  //       <div className="question-answer">
-  //         <div className="question">{question}</div>
-  //         <div className="answer">{answer}</div>
-  //       </div>
-  //         <div className="comments">
-  //           {comments.map((comment, index) => (
-  //             <div key={index} className="comment">
-  //               {comment}
-  //             </div>
-  //           ))}
-  //         </div>
-  //       <button className="exit-full-screen" onClick={handleExitFullScreenClick}>
-  //         Exit Full Screen
-  //       </button>
-  //     </div>
-  //   )
-  // }
-
   return (
     <div
       className="flashcard"
@@ -52,9 +31,9 @@ const Flashcard = ({question, answer, id}) => {
       onMouseLeave={handleMouseLeave}
     >
       <div className="question">{question}</div>
-      <div className={`answer ${showAnswer ? 'visible' : ''}`}>{answer}</div>
+      <div className={`answer ${showAnswer ? 'visible' : ''}`}>{top_comment.answer}</div>
       {/*<button onClick={handleFullScreenClick}>Show Comments</button>*/}
-      <Link to={`/flashcards/${id}`}>
+      <Link to={`/flashcards/${id + 1}`}>
         <button className="expand-button">Expand</button>
       </Link>
     </div>
@@ -68,7 +47,7 @@ const FlashcardTileGroup = ({cards}) => {
     return (
     <div className="flashcard-list">
       {cards.map((flashcard, index) => (
-          <Flashcard key={index} question={flashcard.question} answer={flashcard.answer} id={index} />
+          <Flashcard key={index} question={flashcard.question} top_comment={flashcard.top_comment} id={index} />
       ))}
     </div>
   );

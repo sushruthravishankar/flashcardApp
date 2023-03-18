@@ -1,4 +1,5 @@
 .flashcard-full {
+  background-color: #FDFDFF;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -15,10 +16,19 @@
 /*  align-items: center;*/
 
 /*}*/
+/*.question-box {*/
+
+/*}*/
 
 .question-full {
   flex: 1;
   text-align: center;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  padding: 40px;
+  /*padding-left: 40px;*/
+  /*padding-top: 50px;*/
+  margin-bottom: 20px;
 }
 
 .comments-full {
@@ -89,4 +99,21 @@
   flex-direction: column;
   justify-content: flex-start;
   overflow-y: scroll;
+}
+
+.comments-without-form {
+  overflow-y: scroll;
+  height: calc(100vh - 150px); /* Subtract the height of the question and comment form from the viewport height */
+}
+
+.show-more-less {
+  background-color: blue;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.show-more-less:hover {
+  background-color: lightblue;
 }

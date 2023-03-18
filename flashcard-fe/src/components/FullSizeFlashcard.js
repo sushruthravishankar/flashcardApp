@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {Button} from "reactstrap";
 import axios from 'axios';
 import './FullSizeFlashcard.css'
 import Comment from "./Comment";
@@ -41,6 +42,7 @@ const FullSizeFlashcard = () => {
   const [date, setDateCreated] = useState('');
   const [comments, setComments] = useState([]);
   const [newAnswerText, setNewAnswerText] = useState('');
+  const [showAllComments, setShowAllComments] = useState(false);
 
 
   useEffect(() => {
@@ -59,7 +61,8 @@ const FullSizeFlashcard = () => {
   const handleNewCommentSubmit = (event) => {
     event.preventDefault();
 
-    const newComment = { answer: newAnswerText, votes: 1 };
+
+  const newComment = { answer: newAnswerText, votes: 1 };
     axios.post(`http://localhost:8000/flashcard/rest-flashcard/${id}/comments`, newComment)
       .then(response => {
         setComments([...comments, response.data]);
@@ -70,12 +73,17 @@ const FullSizeFlashcard = () => {
       });
   };
 
-  return (
+    function handleShowMoreLess() {
+        setShowAllComments(!showAllComments);
+    }
+
+    return (
     <div className="flashcard-full">
       <div className="question-full">{question}</div>
         {/*<div className="question-full">{date}</div>*/}
       <div className="comments-full right-pane">
-          {comments.map(comment => (
+          <div className="comments-without-form">
+          {comments.slice(0, showAllComments ? comments.length : 3).map(comment => (
           <Comment
             key={comment.id}
             id={comment.id}
@@ -83,6 +91,20 @@ const FullSizeFlashcard = () => {
             initialVoteCount={comment.votes}
           />
           ))}
+        {comments.length > 3 && (
+            // <button className="show-more-less" onClick={handleShowMoreLess}>
+            //   {showAllComments ? "Show less" : "See more"}
+            // </button>
+            <Button
+                color="primary"
+                onClick={handleShowMoreLess}
+                style={{ minWidth: "200px"}}
+            >
+                {showAllComments ? "Show less" : "See more"}
+            </Button>
+
+        )}
+              </div>
           <form onSubmit={handleNewCommentSubmit} className="new-comment-form">
               <textarea
                 value={newAnswerText}

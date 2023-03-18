@@ -18,7 +18,8 @@ class Home extends Component {
   }
 
   getCards = () => {
-    axios.get(API_URL).then(res => this.setState({ cards: res.data }));
+    const URL = "http://localhost:8000/flashcard/rest-flashcard/all"
+    axios.get(URL).then(res => this.setState({ cards: res.data }));
   };
 
   resetState = () => {

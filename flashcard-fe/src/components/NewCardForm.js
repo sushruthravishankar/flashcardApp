@@ -22,7 +22,8 @@ class NewCardForm extends React.Component {
 
   createCard = e => {
     e.preventDefault();
-    axios.post(API_URL, this.state).then(() => {
+    const URL = "http://localhost:8000/flashcard/rest-flashcard/add/"
+    axios.post(URL, this.state).then(() => {
       this.props.resetState();
       this.props.toggle();
     });
