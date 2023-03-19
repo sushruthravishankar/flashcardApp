@@ -5,7 +5,7 @@ import './FullSizeFlashcard.css'
 import Comment from "./Comment";
 import styled from 'styled-components';
 import {API_FLASHCARD_DETAILED} from "../constants";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 
 // const FullSizeFlashcard = () => {
 //
@@ -79,6 +79,19 @@ const FullSizeFlashcard = () => {
 
     return (
     <div className="flashcard-full">
+        <div className="navigation">
+          <Link to={"/"}>
+            <button className="back-btn">View All Flashcards</button>
+          </Link>
+            <div className="nav-btns">
+                <Link to={`/flashcards/${id - 1}`}>
+                    <button className="prev-btn">Previous</button>
+                </Link>
+                <Link to={`/flashcards/${parseInt(id) + 1}`}>
+                    <button className="next-btn">Next</button>
+                </Link>
+            </div>
+        </div>
       <div className="question-full">{question}</div>
         {/*<div className="question-full">{date}</div>*/}
       <div className="comments-full right-pane">
@@ -117,6 +130,7 @@ const FullSizeFlashcard = () => {
           </form>
       </div>
     </div>
+
   );
 };
 

@@ -117,3 +117,88 @@
 .show-more-less:hover {
   background-color: lightblue;
 }
+
+.button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/*.navigation {*/
+/*  !*  position: absolute;*!*/
+/*  !*top: 0;*!*/
+/*  !*left: 0;*!*/
+/*  !*right: 0;*!*/
+/*  !*!*  display: flex;*!*!*/
+/*  !*justify-content: space-between;*!*/
+/*  !*align-items: center;*!*/
+/*  !*!*background-color: #fff;*!*!*/
+/*  !*padding: 20px;*!*/
+/*  !*border-radius: 5px;*!*/
+/*  !*border: 1px solid #ccc;*!*/
+/*  !*margin-bottom: 20px;*!*/
+/*  position: absolute;*/
+/*  top: 0;*/
+/*  right: 0;*/
+/*  display: flex;*/
+
+
+/*}*/
+
+.back-btn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  font-size: 18px;
+  border: none;
+  background-color: #ffffff;
+  color: #0077ff;
+}
+
+.nav-btns {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+}
+
+.prev-btn,
+.next-btn {
+  padding: 5px;
+  font-size: 18px;
+  border: none;
+  background-color: #0077ff;
+  color: #ffffff;
+
+}
+
+.prev-btn {
+  border-radius: 5px 5px 5px 5px;
+  margin-right: 2px;
+}
+
+.next-btn {
+  border-radius: 5px 5px 5px 5px;
+  margin-right: 20px;
+}
+
+.back-button {
+  background-color: #2196F3;
+}
+
+.previous-button {
+  background-color: #f44336;
+}
+
+.next-button {
+  background-color: #4CAF50;
+}
