@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Card, Flashcard, Comments
+from .models import Card, Flashcard, Comments, User
 
 
 class CardSerializer(serializers.ModelSerializer):
@@ -15,12 +15,23 @@ class FlashCardSerializer(serializers.ModelSerializer):
         field = ('question', 'date_created', 'comments')
 
 
-class CommentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Comments
-        fields = ['id', 'answer', 'votes']
 
 class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comments
         fields = ['id', 'answer', 'votes']
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username']
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    username = serializers.SerializerMethodField()
+    class Meta:
+        model = Comments
+        fields = ['id', 'answer', 'votes', 'username']
+
+    def get_username(self, obj):
+        return obj.created_by.username

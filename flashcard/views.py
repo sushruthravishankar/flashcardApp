@@ -130,6 +130,14 @@ class FlashcardWithTopCommentSerializer(serializers.ModelSerializer):
         fields = ['id', 'question', 'top_comment']
 
 
+class CommentWithUserSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Comments
+        fields = ['id', 'answer', 'votes', 'user']
+
+
 @api_view(['GET'])
 def all_flashcards_with_top_comment(request):
     flashcards = Flashcard.objects.all()
@@ -137,8 +145,10 @@ def all_flashcards_with_top_comment(request):
     for flashcard in flashcards:
         top_comment = flashcard.comments_set.order_by('-votes').first()
         serializer = CommentSerializer(top_comment)
+        serz = UserSerializer(flashcard.created_by)
         data = {
             'question': flashcard.question,
+            'created_by': serz.data,
             'date_created': flashcard.date_created,
             'top_comment': serializer.data
         }

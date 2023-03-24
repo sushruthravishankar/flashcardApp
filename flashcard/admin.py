@@ -31,9 +31,7 @@ class CommentsAdmin(admin.TabularInline):
 
 
 class FlashcardAdmin(admin.ModelAdmin):
-    fieldsets = [
-        (None, {'fields': ['question']}),
-    ]
+    model = Flashcard
     inlines = [CommentsAdmin]
 
 

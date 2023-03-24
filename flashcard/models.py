@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Question(models.Model):
@@ -36,6 +37,7 @@ class Card(models.Model):
 class Flashcard(models.Model):
     question = models.TextField()
     date_created = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     def __str__(self):
         return self.question
 
@@ -45,6 +47,7 @@ class Comments(models.Model):
     answer = models.CharField(max_length=200)
     data_created = models.DateTimeField(auto_now_add=True)
     votes = models.IntegerField(auto_created=1)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 
