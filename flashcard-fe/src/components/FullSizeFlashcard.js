@@ -40,6 +40,7 @@ const FullSizeFlashcard = () => {
     console.log("id: " + id);
   const [question, setQuestion] = useState('');
   const [date, setDateCreated] = useState('');
+  // const [username, setUsername] = useState('');
   const [comments, setComments] = useState([]);
   const [newAnswerText, setNewAnswerText] = useState('');
   const [showAllComments, setShowAllComments] = useState(false);
@@ -53,6 +54,7 @@ const FullSizeFlashcard = () => {
         setQuestion(data.question);
         setComments(data.comments);
         setDateCreated(data.date_created);
+        // setUsername(data.username);
 
       })
       .catch(error => console.log(error));
@@ -102,6 +104,7 @@ const FullSizeFlashcard = () => {
             id={comment.id}
             text={comment.answer}
             initialVoteCount={comment.votes}
+            username={comment.username}
           />
           ))}
         {comments.length > 3 && (

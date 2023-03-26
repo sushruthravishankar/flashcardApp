@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Comment.css';
 import axios from "axios";
 
-const Comment = ({id, text, initialVoteCount}) => {
+const Comment = ({id, text, initialVoteCount, username}) => {
   const [voteCount, setVoteCount] = useState(initialVoteCount);
 
   function handleIncreaseVote() {
@@ -40,6 +40,7 @@ const Comment = ({id, text, initialVoteCount}) => {
         <button onClick={handleDecreaseVote} className="vote-down"></button>
       </div>
       <div className="comment-text">{text}</div>
+      <div className="comment-username">{username}</div>
     </div>
   );
 }

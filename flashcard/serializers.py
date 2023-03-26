@@ -29,9 +29,16 @@ class UserSerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField()
+
     class Meta:
         model = Comments
         fields = ['id', 'answer', 'votes', 'username']
 
     def get_username(self, obj):
         return obj.created_by.username
+
+
+class CommentToAddSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comments
+        fields = ['id', 'answer', 'votes']

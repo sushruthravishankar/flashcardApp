@@ -51,3 +51,16 @@
 .comment-text {
   flex: 1;
 }
+
+
+.comment-username {
+  position: relative;
+  bottom: 0;
+  right: 0;
+  padding: 5px;
+  font-size: 18px;
+  border: none;
+  background-color: #ffffff;
+  color: #0077ff;
+  border-radius: 10px;
+}

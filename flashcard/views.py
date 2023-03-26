@@ -1,5 +1,6 @@
+from django.contrib.auth import authenticate, login
 from django.shortcuts import render
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 from django.http import HttpResponseRedirect, JsonResponse
@@ -85,9 +86,9 @@ def add_flashcard_with_comment(request):
     answer_text = request.data.get('answer')
     if not question_text or not answer_text:
         return JsonResponse({'error': 'Both question and comment text are required'}, status=400)
-    flashcard = Flashcard(question=question_text)
+    flashcard = Flashcard(question=question_text, created_by=request.user)
     flashcard.save()
-    comment = Comments(question=flashcard, answer=answer_text, votes=1)
+    comment = Comments(question=flashcard, answer=answer_text, votes=1, created_by=request.user)
     comment.save()
     flashcard_serializer = FlashCardSerializer(flashcard)
     comment_serializer = CommentSerializer(comment)
@@ -184,6 +185,8 @@ def comment_downvote(request, comment_id):
         'message': 'Comment upvoted successfully.'
     })
 
+
+# @login_required
 @api_view(['POST', 'GET'])
 def add_comment(request, question_id):
     if request.method == 'GET':
@@ -196,10 +199,32 @@ def add_comment(request, question_id):
         question = get_object_or_404(Flashcard, pk=question_id)
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(question=question)
+            serializer.save(question=question, created_by=request.user)
             return Response(serializer.data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def login_user(request):
+    if request.method == 'POST':
+        print(request.data['username'])
+        username = request.data['username']
+        password = request.data['password']
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+# def current_user(request):
+#     user = request.user
+#     # print(user.username)
+#     return JsonResponse({'user': user})
 
 
 # def detail(request, question_id):
