@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+import random
 # Create your models here.
 class Question(models.Model):
     question_text = models.CharField(max_length=200)
@@ -53,3 +53,11 @@ class Comments(models.Model):
 
     def __str__(self):
         return self.answer
+
+
+class FlashcardTopic(models.Model):
+    name = models.CharField(max_length=50)
+    background_colour = models.CharField(max_length=7, default="#"+''.join([random.choice('0123456789ABCDEF') for j in range(6)]))
+
+    def __str__(self):
+        return self.name

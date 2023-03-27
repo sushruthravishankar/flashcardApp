@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 from django.contrib import admin
-from .models import Choice, Question, Card, Flashcard, Comments
+from .models import Choice, Question, Card, Flashcard, Comments, FlashcardTopic
 
 
 class ChoiceInline(admin.TabularInline):
@@ -35,6 +35,11 @@ class FlashcardAdmin(admin.ModelAdmin):
     inlines = [CommentsAdmin]
 
 
+class FlashcardTopicAdmin(admin.ModelAdmin):
+    model = FlashcardTopic
+
+
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Card, CardAdmin)
 admin.site.register(Flashcard, FlashcardAdmin)
+admin.site.register(FlashcardTopic, FlashcardTopicAdmin)

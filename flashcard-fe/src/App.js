@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import FullSizeFlashcard from "./components/FullSizeFlashcard";
 import Login from "./components/Login";
 import FlashcardTileGroup from "./components/FlashcardTileGroup";
+import TopicsPage from "./components/TopicsPage";
 
 class App extends Component {
   render() {
@@ -18,7 +19,8 @@ class App extends Component {
           {/*<Route path="/">*/}
          <Route path="/flashcards/:id" element={<FullSizeFlashcard/>} />
           <Route path="/" element={<Login />} />
-        <Route path="/flashcards" element={<Home/>}/>
+        <Route path="/flashcards" element={<TopicsPage/>}/>
+            <Route path = "/flashcards/biology" element={<Home/>}/>
 
           {/*<Fragment>*/}
           {/*  <Home />*/}

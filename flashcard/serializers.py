@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Card, Flashcard, Comments, User
+from .models import Card, Flashcard, Comments, User, FlashcardTopic
 
 
 class CardSerializer(serializers.ModelSerializer):
@@ -38,7 +38,8 @@ class CommentSerializer(serializers.ModelSerializer):
         return obj.created_by.username
 
 
-class CommentToAddSerializer(serializers.ModelSerializer):
+class FlashcardTopicSerializer(serializers.ModelSerializer):
+
     class Meta:
-        model = Comments
-        fields = ['id', 'answer', 'votes']
+        model = FlashcardTopic
+        fields = ['id', 'name', 'background_colour']

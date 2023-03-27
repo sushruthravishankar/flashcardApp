@@ -21,6 +21,7 @@ urlpatterns = [
     path('rest-flashcard/<int:question_id>/comments', views.add_comment, name='add-comment'),
     path('rest-flashcard/all', views.all_flashcards_with_top_comment, name='all-flashcards-with-top-comment'),
     path('rest-flashcard/add/', views.add_flashcard_with_comment, name='add-flashcard'),
-    path('login', views.login_user, name='login')
+    path('login', views.login_user, name='login'),
+    path('topics', views.flashcard_topics, name='flashcard-topics')
     # path('current')
 ]

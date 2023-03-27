@@ -199,7 +199,7 @@ def add_comment(request, question_id):
         question = get_object_or_404(Flashcard, pk=question_id)
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(question=question, created_by=request.user)
+            serializer.save(question=question)
             return Response(serializer.data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -250,3 +250,10 @@ def login_user(request):
 #         # with POST data. This prevents data from being posted twice if a
 #         # user hits the Back button.
 #         return HttpResponseRedirect(reverse('flashcard:results', args=(question.id,)))
+
+@api_view(['GET'])
+def flashcard_topics(request):
+    if request.method == 'GET':
+        data = FlashcardTopic.objects.all();
+        serializer = FlashcardTopicSerializer(data, context={'request': request}, many=True)
+        return Response(serializer.data)

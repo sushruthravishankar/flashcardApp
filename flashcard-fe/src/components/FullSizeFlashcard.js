@@ -82,7 +82,7 @@ const FullSizeFlashcard = () => {
     return (
     <div className="flashcard-full">
         <div className="navigation">
-          <Link to={"/"}>
+          <Link to={"/flashcards"}>
             <button className="back-btn">View All Flashcards</button>
           </Link>
             <div className="nav-btns">

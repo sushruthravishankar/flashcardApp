@@ -33,7 +33,6 @@ class Home extends Component {
           <Col>
             <FlashcardTileGroup
               cards={this.state.cards}
-              // resetState={this.resetState}
             />
           </Col>
         </Row>
